@@ -1,0 +1,8 @@
+**/.DS_Store
+tmp/
+logs/
+.vscode/
+cmd/server/tmp/
+main
+server
+.air.toml
