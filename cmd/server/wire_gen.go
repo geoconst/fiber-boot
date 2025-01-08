@@ -8,18 +8,20 @@ package main
 
 import (
 	"fiber-boot/internal/app"
+	"fiber-boot/internal/core"
 	"fiber-boot/internal/dao"
 	"fiber-boot/internal/module/account"
 )
 
 // Injectors from wire.go:
 
-func InitializeServer() *app.Server {
-	config := app.NewConfig()
-	db := app.NewDB(config)
+func InitApp() *app.App {
+	config := core.NewConfig()
+	db := core.NewDB(config)
 	accountDAO := dao.NewAccountDAO(db)
 	accessTokenDAO := dao.NewAccessTokenDAO(db)
 	accountHandler := account.NewAccountHandler(accountDAO, accessTokenDAO)
 	server := app.NewServer(config, accountHandler, accessTokenDAO)
-	return server
+	appApp := app.NewApp(server)
+	return appApp
 }

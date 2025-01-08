@@ -1,4 +1,4 @@
-package app
+package core
 
 import (
 	"fiber-boot/internal/utils"
@@ -10,7 +10,8 @@ import (
 	"github.com/phsym/console-slog"
 )
 
-func GetLogWriter() io.Writer {
+// 配置日志writer
+func logWriter() io.Writer {
 	var output io.Writer = os.Stderr
 	if utils.IsProd() {
 		output = &lumberjack.Logger{
@@ -25,7 +26,7 @@ func GetLogWriter() io.Writer {
 }
 
 // 初始化日志配置
-func InitLogger() *slog.Logger {
+func InitLogger(config *Config) *slog.Logger {
 	options := &console.HandlerOptions{Level: slog.LevelInfo, AddSource: true}
 	if utils.IsProd() {
 		options = &console.HandlerOptions{
@@ -36,7 +37,7 @@ func InitLogger() *slog.Logger {
 	}
 	logger := slog.New(
 		console.NewHandler(
-			GetLogWriter(),
+			logWriter(),
 			options,
 		),
 	)

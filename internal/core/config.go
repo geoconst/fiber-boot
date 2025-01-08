@@ -1,4 +1,4 @@
-package app
+package core
 
 import (
 	"encoding/json"
@@ -21,5 +21,6 @@ func NewConfig() *Config {
 	if err != nil {
 		panic(err)
 	}
+	InitLogger(&config)
 	return &config
 }

@@ -1,4 +1,4 @@
-package app
+package core
 
 import (
 	"fiber-boot/internal/utils"
