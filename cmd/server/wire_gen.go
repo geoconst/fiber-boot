@@ -10,7 +10,6 @@ import (
 	"fiber-boot/internal/app"
 	"fiber-boot/internal/dao"
 	"fiber-boot/internal/module/account"
-	"github.com/google/wire"
 )
 
 // Injectors from wire.go:
@@ -24,9 +23,3 @@ func InitializeServer() *app.Server {
 	server := app.NewServer(config, accountHandler, accessTokenDAO)
 	return server
 }
-
-// wire.go:
-
-var daos = wire.NewSet(app.NewConfig, app.NewDB, dao.NewAccountDAO, dao.NewAccessTokenDAO)
-
-var handlers = wire.NewSet(account.NewAccountHandler)
