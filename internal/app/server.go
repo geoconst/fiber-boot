@@ -14,6 +14,7 @@ import (
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html/v2"
 	"github.com/mdobak/go-xerrors"
 	slogfiber "github.com/samber/slog-fiber"
 	"gorm.io/gorm"
@@ -31,7 +32,9 @@ func NewServer(
 	accountHandler *account.AccountHandler,
 	accessTokenDao *dao.AccessTokenDAO) *Server {
 
+	engine := html.New("./template", ".html")
 	f := fiber.New(fiber.Config{
+		Views:        engine,
 		ErrorHandler: errorHandler,
 		ReadTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 30,
@@ -39,6 +42,7 @@ func NewServer(
 		JSONEncoder:  json.Marshal,
 		JSONDecoder:  json.Unmarshal,
 	})
+	f.Static("/", "./static")
 
 	return &Server{
 		config:         config,
